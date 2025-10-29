@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,9 @@
         
         <div class="order-summary">
             <h3>Order Summary</h3>
-            <p><strong>Item:</strong> Chicken Burger</p>
-            <p><strong>Quantity:</strong> 2</p>
-            <p><strong>Price:</strong> ₹150 x 2 = ₹300</p>
+            <p><strong>Item:</strong> <span th:text="${item}">Chicken Burger</span></p>
+            <p><strong>Quantity:</strong> <span th:text="${quantity}">2</span></p>
+            <p><strong>Price:</strong> ₹<span th:text="${price}">150</span> x <span th:text="${quantity}">2</span> = ₹<span th:text="${total}">300</span></p>
         </div>
         
         <div class="payment-form">
@@ -40,7 +40,7 @@
         </div>
         
         <div style="text-align: center; margin-top: 20px;">
-            <a href="/menu" class="btn btn-secondary">Back to Menu</a>
+            <a href="/web/menu" class="btn btn-secondary">Back to Menu</a>
         </div>
     </div>
 </body>

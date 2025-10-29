@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,21 +9,30 @@
 <body>
     <div class="container">
         <h1>Order History</h1>
+        <h3 th:if="${username}" style="text-align: center; color: #667eea; margin-bottom: 30px;">Welcome, <span th:text="${username}"></span>!</h3>
         
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-            <h3>Order #001</h3>
-            <p><strong>Date:</strong> 2024-10-29</p>
-            <p><strong>Items:</strong> Chicken Burger x 2</p>
-            <p><strong>Total:</strong> ₹300</p>
-            <p><strong>Status:</strong> <span style="color: green;">Completed</span></p>
+        <div th:if="${orders != null and !orders.empty}">
+            <div th:each="order : ${orders}" class="order-card">
+                <h3>Order #<span th:text="${order.id}"></span></h3>
+                <p><strong>Date:</strong> <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                <div th:if="${order.orderItems != null}">
+                    <p><strong>Items:</strong></p>
+                    <ul>
+                        <li th:each="item : ${order.orderItems}">
+                            <span th:text="${item.menuItem.name}"></span> x <span th:text="${item.quantity}"></span> - ₹<span th:text="${item.price}"></span>
+                        </li>
+                    </ul>
+                </div>
+                <p><strong>Total:</strong> ₹<span th:text="${order.totalAmount}"></span></p>
+                <p><strong>Status:</strong> 
+                    <span th:text="${order.status}" 
+                          th:style="${order.status == 'COMPLETED' ? 'color: green;' : (order.status == 'PENDING' ? 'color: orange;' : 'color: red;')}"></span>
+                </p>
+            </div>
         </div>
         
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-            <h3>Order #002</h3>
-            <p><strong>Date:</strong> 2024-10-28</p>
-            <p><strong>Items:</strong> Veg Pizza x 1</p>
-            <p><strong>Total:</strong> ₹200</p>
-            <p><strong>Status:</strong> <span style="color: orange;">Pending</span></p>
+        <div th:if="${orders == null or orders.empty}" class="no-orders">
+            <p>No orders found. <a href="/web/menu">Start ordering now!</a></p>
         </div>
         
         <div style="text-align: center; margin-top: 30px;">

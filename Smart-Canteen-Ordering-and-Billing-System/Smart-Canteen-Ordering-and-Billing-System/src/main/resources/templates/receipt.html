@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,25 +13,24 @@
             
             <div style="text-align: center; margin-bottom: 30px;">
                 <h2>SMART CANTEEN</h2>
-                <p>Order ID: #001</p>
-                <p>Date: 2024-10-29</p>
+                <p>Date: <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm')}">2024-10-29</span></p>
             </div>
             
             <div style="border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 20px;">
-                <p><strong>Customer:</strong> John Doe</p>
-                <p><strong>Item:</strong> Chicken Burger x 2</p>
-                <p><strong>Amount:</strong> ₹300</p>
-                <p><strong>Payment Method:</strong> UPI</p>
+                <p><strong>Customer:</strong> <span th:text="${customerName}">John Doe</span></p>
+                <p><strong>Item:</strong> <span th:text="${item}">Chicken Burger</span> x <span th:text="${quantity}">2</span></p>
+                <p><strong>Amount:</strong> ₹<span th:text="${total}">300</span></p>
+                <p><strong>Payment Method:</strong> <span th:text="${paymentMethod}">UPI</span></p>
                 <p><strong>Status:</strong> COMPLETED</p>
             </div>
             
             <div style="text-align: center; font-size: 18px; font-weight: bold;">
-                <p>Total Paid: ₹300</p>
+                <p>Total Paid: ₹<span th:text="${total}">300</span></p>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
                 <p>Thank you for your order!</p>
-                <a href="/menu" class="btn">Order Again</a>
+                <a href="/web/menu" class="btn">Order Again</a>
                 <a href="/home" class="btn btn-secondary">Back to Home</a>
             </div>
         </div>

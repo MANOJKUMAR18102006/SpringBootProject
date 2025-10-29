@@ -3,7 +3,9 @@ package com.example.Smart_Canteen_Ordering_and_Billing_System.controller;
 import com.example.Smart_Canteen_Ordering_and_Billing_System.entity.User;
 import com.example.Smart_Canteen_Ordering_and_Billing_System.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/users")
@@ -13,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password){
+    public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, HttpSession session){
         try {
             User user = new User();
             user.setUsername(username);
@@ -21,6 +23,7 @@ public class UserController {
             user.setPassword(password);
             user.setRole("CUSTOMER");
             userService.saveUser(user);
+            session.setAttribute("loggedInUser", user);
             return "redirect:/home";
         } catch (Exception e) {
             return "redirect:/?error=registration";
@@ -28,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password){
+    public String loginUser(@RequestParam String username, @RequestParam String password, HttpSession session){
         try {
             User user = userService.findByUsername(username);
 
@@ -37,6 +40,7 @@ public class UserController {
             }
 
             if(user.getPassword().equals(password)){
+                session.setAttribute("loggedInUser", user);
                 return "redirect:/home";
             } else {
                 return "redirect:/?error=invalidpassword";
