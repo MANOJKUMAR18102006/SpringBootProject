@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Canteen - Payment</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Payment</h1>
+        
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <p><strong>Item:</strong> Chicken Burger</p>
+            <p><strong>Quantity:</strong> 2</p>
+            <p><strong>Price:</strong> ₹150 x 2 = ₹300</p>
+        </div>
+        
+        <div class="payment-form">
+            <h3>Payment Details</h3>
+            <form action="/receipt" method="post">
+                <div class="form-group">
+                    <label>Payment Method:</label>
+                    <select name="paymentMethod" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="CASH">Cash</option>
+                        <option value="CARD">Card</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Customer Name:</label>
+                    <input type="text" name="customerName" required>
+                </div>
+                
+                <button type="submit" class="btn">Pay Now</button>
+            </form>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/menu" class="btn btn-secondary">Back to Menu</a>
+        </div>
+    </div>
+</body>
+</html>
